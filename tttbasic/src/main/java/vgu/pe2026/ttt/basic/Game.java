@@ -39,9 +39,6 @@ public class Game {
                 if (choiceTemp.equals("q")){
                     isQuit = true;
                     break;
-                }if (choiceTemp.equals("-1")){
-                    send("Invalid input!");
-                    continue;
                 }
                 try {
                     int choice = Integer.parseInt(choiceTemp);

@@ -2,12 +2,15 @@ package vgu.pe2026.ttt.basic;
 
 import java.net.*;
 import java.io.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MultiUserServer {
     private static final int PORT = 5002;
     private static int clientCounter = 0;
 
     public static void main(String[] args) {
+        ExecutorService pool = Executors.newFixedThreadPool(4);
         try {
             ServerSocket ss = new ServerSocket(PORT);
             System.out.println("Multi-user server started on port " + PORT);
@@ -18,8 +21,9 @@ public class MultiUserServer {
                 int clientId = clientCounter;
                 System.out.println("Client #" + clientId + " connected");
 
-                Thread gameThread = new Thread(new GameSession(socket, clientId));
-                gameThread.start();
+                pool.execute(new GameSession(socket, clientId));
+                // Thread gameThread = new Thread(new GameSession(socket, clientId));
+                // gameThread.start();
             }
         } catch (Exception e) {
             e.printStackTrace();

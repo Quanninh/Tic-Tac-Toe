@@ -14,9 +14,6 @@ public class NetworkHuman extends Player {
     public String chooseMove(Board board) {
         try {
             String moveCheck = input.readLine();
-            if (moveCheck == null) {
-                return "-1";
-            }
             return moveCheck;
         } catch (IOException e) {
             return "-1";

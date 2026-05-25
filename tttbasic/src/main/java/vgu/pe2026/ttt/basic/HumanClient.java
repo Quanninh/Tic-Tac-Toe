@@ -27,70 +27,39 @@ public class HumanClient {
             System.out.println("Connected to server.");
 
             // choose starting player
-            int turn;
-
-            while (true) {
-
-                System.out.println(
-                        "Enter first turn (1 = Human, 2 = Computer): ");
-
-                turn = scanner.nextInt();
-
-                if (turn == HUMAN_PLAYER ||
-                    turn == COMPUTER_PLAYER) {
-                    break;
-                }
-
-                System.out.println("Invalid turn.");
-            }
-
-            scanner.nextLine();
+            int turn = 1;
 
             // send starting turn
             out.println(turn);
 
             while (true) {
 
-                // human sends move first
-                if (turn == HUMAN_PLAYER) {
-
-                    System.out.println(
-                            "Choose a cell from 1 to 9 (or q to quit): ");
-
-                    String move = scanner.nextLine();
-
-                    out.println(move);
-
-                    if (move.equalsIgnoreCase("q")) {
-                        break;
-                    }
-                }
-
-                // receive server response
+                // receive board/message from server
                 String response;
 
                 while ((response = in.readLine()) != null) {
 
                     System.out.println(response);
 
-                    if (response.contains("Game is finished") ||
-                        response.contains("winner") ||
-                        response.contains("Draw") ||
-                        response.contains("End of the Game")) {
-
-                        client.close();
-                        return;
-                    }
-
-                    // stop after board received
                     if (!in.ready()) {
                         break;
                     }
                 }
 
-                // after server responds,
-                // human turn comes again
-                turn = HUMAN_PLAYER;
+                // game over
+                if (response.contains("winner") ||
+                    response.contains("Draw") ||
+                    response.contains("End of the game")) {
+                        break;
+                }
+
+                // ask human move
+                System.out.println(
+                        "Choose a cell from 1 to 9 (or q to quit): ");
+
+                String move = scanner.nextLine();
+
+                out.println(move);
             }
 
             client.close();

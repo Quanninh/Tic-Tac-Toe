@@ -4,8 +4,6 @@ import java.net.*;
 import java.io.*;
 
 public class ComputerServer {
-    private static final int HUMAN_PLAYER = 1;
-
     public static void main(String[] args) {
         try {
             ServerSocket ss = new ServerSocket(5001);

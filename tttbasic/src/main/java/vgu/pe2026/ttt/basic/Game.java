@@ -25,23 +25,22 @@ public class Game {
     }
     
     public void play(){
+        output.println("Hello!");
         if (output != null) {
             output.println(board.boardToString());
         }
-        System.out.println("Hello!");
-        board.display();
+        //board.display();
 
         boolean isQuit = false;
         while (!board.isFull() && board.checkWin() == 0){
             if (turn == HUMAN_PLAYER){
-                System.out.println("Player#" + turn + "'s turn");
+                //System.out.println("Player#" + turn + "'s turn");
                 String choiceTemp = human.chooseMove(board);
                 if (choiceTemp.equals("q")){
                     isQuit = true;
                     break;
-                }
-                if (choiceTemp.equals("-1")) {
-                    System.out.println("Invalid input!");
+                }if (choiceTemp.equals("-1")){
+                    send("Invalid input!");
                     continue;
                 }
                 try {
@@ -50,29 +49,30 @@ public class Game {
                         board.move(choice-1, turn);
                         turn = COMPUTER_PLAYER;
                     }else if (!(choice > 0 && choice <= 9)){
-                        System.out.println("Please, input a valid number [1-9]");
+                        output.println("Please, input a valid number [1-9]");
                     }
                     else{
-                        System.out.println("The cell is occupied!");
+                        output.println("The cell is occupied!");
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Please, input a valid number [1-9]");
+                    output.println("Please, input a valid number [1-9]");
                 }
             }else{
-                System.out.println("Player#" + turn + "'s turn");
+                //System.out.println("Player#" + turn + "'s turn");
                 int choice = Integer.parseInt(computer.chooseMove(board));
                 board.move(choice, turn);
-                System.out.println("Computer chose: " + (choice+1));
+                //System.out.println("Computer chose: " + (choice+1));
                 turn = HUMAN_PLAYER;
                 send(board.boardToString());
             }
-            board.display();
+            //board.display();
         }
 
         if (isQuit) {
             send("Game is finished");
             send("End of the game");
         } else {
+            send(board.boardToString());
             int win = board.checkWin();
             send("Game is finished");
             if (win == HUMAN_PLAYER){

@@ -6,14 +6,11 @@ import java.util.Scanner;
 
 public class HumanClient {
 
-    private static final int HUMAN_PLAYER = 1;
-    private static final int COMPUTER_PLAYER = 2;
-
     public static void main(String[] args) {
 
         try {
 
-            Socket client = new Socket("localhost", 5001);
+            Socket client = new Socket("localhost", 5002);
 
             BufferedReader in =
                     new BufferedReader(

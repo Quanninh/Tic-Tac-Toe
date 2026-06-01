@@ -95,4 +95,26 @@ public class Board2D extends Board{
         }
         return 0;
     }
+
+    public static Board2D fromString(String boardStr) {
+        Board2D board = new Board2D();
+        String[] lines = boardStr.split("\n");
+        if (lines.length < 3) return null;
+
+        for (int i = 0; i < 3; i++) {
+            String line = lines[i].trim();
+            String[] parts = line.split("\\|");
+            if (parts.length < 4) return null;
+
+            for (int j = 0; j < 3; j++) {
+                try {
+                    int value = Integer.parseInt(parts[j + 1].trim());
+                    board.cells[i][j] = value;
+                } catch (NumberFormatException e) {
+                    return null;
+                }
+            }
+        }
+        return board;
+    }
 }

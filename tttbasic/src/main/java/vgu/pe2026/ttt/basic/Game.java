@@ -46,9 +46,11 @@ public class Game {
                         board.move(choice-1, turn);
                         turn = COMPUTER_PLAYER;
                     }else if (!(choice > 0 && choice <= 9)){
+                        output.println(board.boardToString());
                         output.println("Please, input a valid number [1-9]");
                     }
                     else{
+                        output.println(board.boardToString());
                         output.println("The cell is occupied!");
                     }
                 } catch (NumberFormatException e) {
@@ -60,31 +62,24 @@ public class Game {
                 board.move(choice, turn);
                 //System.out.println("Computer chose: " + (choice+1));
                 turn = HUMAN_PLAYER;
-                send(board.boardToString());
+                output.println(board.boardToString());
             }
             //board.display();
         }
 
         if (isQuit) {
-            send("Game is finished");
-            send("End of the game");
+            output.println("Game is finished");
+            output.println("End of the game");
         } else {
-            send(board.boardToString());
             int win = board.checkWin();
-            send("Game is finished");
+            output.println("Game is finished");
             if (win == HUMAN_PLAYER){
-                send("The winner is human");
+                output.println("The winner is human");
             }else if (win == COMPUTER_PLAYER){
-                send("The winner is computer");
+                output.println("The winner is computer");
             }else{
-                send("Draw");
+                output.println("Draw");
             }
-        }
-    }
-
-    private void send(String message) {
-        if (output != null) {
-            output.println(message);
         }
     }
 }

@@ -41,13 +41,16 @@ public class Board2D extends Board{
 
     @Override
     public String boardToString(){
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("BOARD:");
 
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
-                sb.append("| ").append(cells[i][j]).append(" ");
+                sb.append(cells[i][j]);
+
+                if (!(i == 2 && j == 2)){
+                    sb.append(",");
+                }
             }
-            sb.append("|\n");
         }
         return sb.toString();
     }
@@ -97,24 +100,24 @@ public class Board2D extends Board{
     }
 
     public static Board2D fromString(String boardStr) {
+        if (boardStr == null || !boardStr.startsWith("BOARD:")) {
+            return null;
+        }
+
         Board2D board = new Board2D();
-        String[] lines = boardStr.split("\n");
-        if (lines.length < 3) return null;
+        String[] parts = boardStr.substring("BOARD:".length()).split(",");
 
-        for (int i = 0; i < 3; i++) {
-            String line = lines[i].trim();
-            String[] parts = line.split("\\|");
-            if (parts.length < 4) return null;
+        if (parts.length != 9) return null;
 
-            for (int j = 0; j < 3; j++) {
-                try {
-                    int value = Integer.parseInt(parts[j + 1].trim());
-                    board.cells[i][j] = value;
-                } catch (NumberFormatException e) {
-                    return null;
-                }
+        for (int i = 0; i < 9; i++) {
+            try {
+                int value = Integer.parseInt(parts[i].trim());
+                board.cells[i / 3][i % 3] = value;
+            } catch (NumberFormatException e) {
+                return null;
             }
         }
+
         return board;
     }
 }

@@ -19,7 +19,7 @@ public class StatelessClient {
 
             System.out.println();
             System.out.println("Current board:");
-            System.out.println(board.boardToString());
+            board.display();
 
             System.out.print("Choose a cell from 1 to 9 (or q to quit): ");
 
@@ -30,22 +30,17 @@ public class StatelessClient {
 
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-                    PrintWriter out = new PrintWriter(socket.getOutputStream(),true)
-            ) {
+                    PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
 
                 out.println(move);
 
-                String[] boardLines =
-                        board.boardToString().split("\n");
-
-                for (String line : boardLines) {
-                    out.println(line);
-                }
+                out.println(board.boardToString());
 
                 String status = in.readLine();
+                System.out.println();
 
                 if (status == null) {
-                    System.out.println( "Server disconnected");
+                    System.out.println("Server disconnected");
                     break;
                 }
 
@@ -65,48 +60,30 @@ public class StatelessClient {
                     continue;
                 }
 
-                StringBuilder boardBuilder = new StringBuilder();
 
-                for (int i = 0; i < 3; i++) {
+                board = Board2D.fromString(in.readLine());
 
-                    String line = in.readLine();
+                // System.out.println("Board after server move:");
 
-                    if (line == null) {
-                        break;
-                    }
-
-                    boardBuilder.append(line).append("\n");
-                }
-
-                board = Board2D.fromString(boardBuilder.toString());
-
-                System.out.println();
-                System.out.println(
-                        "Board after server move:");
-
-                System.out.println(
-                        board.boardToString());
+                // board.display();
 
                 if (status.equals("HUMAN_WIN")) {
 
-                    System.out.println(
-                            "The winner is human");
+                    System.out.println("The winner is human");
 
                     break;
                 }
 
                 if (status.equals("COMPUTER_WIN")) {
 
-                    System.out.println(
-                            "The winner is computer");
+                    System.out.println("The winner is computer");
 
                     break;
                 }
 
                 if (status.equals("DRAW")) {
 
-                    System.out.println(
-                            "Draw");
+                    System.out.println("Draw");
 
                     break;
                 }

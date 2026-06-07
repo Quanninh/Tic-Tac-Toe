@@ -43,19 +43,19 @@ public class StatelessServer {
             return;
         }
 
-        StringBuilder boardBuilder = new StringBuilder();
+        // StringBuilder boardBuilder = new StringBuilder();
 
-        for (int i = 0; i < 3; i++) {
-            String line = in.readLine();
+        // for (int i = 0; i < 3; i++) {
+        //     String line = in.readLine();
 
-            if (line == null) {
-                return;
-            }
+        //     if (line == null) {
+        //         return;
+        //     }
 
-            boardBuilder.append(line).append("\n");
-        }
+        //     boardBuilder.append(line).append("\n");
+        // }
 
-        Board2D board = Board2D.fromString(boardBuilder.toString());
+        Board2D board = Board2D.fromString(in.readLine());
 
         if (board == null) {
             out.println("ERROR");
@@ -135,15 +135,10 @@ public class StatelessServer {
         }
     }
 
-    private static void sendBoard(
-            PrintWriter out,
-            Board2D board) {
+    private static void sendBoard(PrintWriter out, Board2D board) {
 
-        String[] lines =
-                board.boardToString().split("\n");
+        String boardString = board.boardToString();
 
-        for (String line : lines) {
-            out.println(line);
-        }
+        out.println(boardString);
     }
 }

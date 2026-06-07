@@ -1,6 +1,14 @@
-package vgu.pe2026.ttt.basic;
+package vgu.pe2026.ttt.basic.SingleMultiClient;
 
 import java.net.*;
+
+import vgu.pe2026.ttt.basic.Board;
+import vgu.pe2026.ttt.basic.Board2D;
+import vgu.pe2026.ttt.basic.Game;
+import vgu.pe2026.ttt.basic.Machine;
+import vgu.pe2026.ttt.basic.NetworkHuman;
+import vgu.pe2026.ttt.basic.Player;
+
 import java.io.*;
 
 public class ComputerServer {

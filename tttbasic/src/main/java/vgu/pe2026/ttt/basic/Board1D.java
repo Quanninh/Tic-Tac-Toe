@@ -37,16 +37,17 @@ public class Board1D extends Board{
     }
 
     @Override
-    public String boardToString(){
-        StringBuilder sb = new StringBuilder();
-        
-        for (int i = 0; i < 9; i++){
-            sb.append("| ").append(cells[i]).append(" ");
+    public String boardToString() {
+        StringBuilder sb = new StringBuilder("BOARD:");
 
-            if ((i + 1) % 3 == 0){
-                sb.append("|\n");
+        for (int i = 0; i < 9; i++) {
+            sb.append(cells[i]);
+
+            if (i < 8) {
+                sb.append(",");
             }
         }
+
         return sb.toString();
     }
 
@@ -81,5 +82,27 @@ public class Board1D extends Board{
             }
         }
         return 0;
+    }
+
+    public static Board1D fromString(String boardStr) {
+        if (boardStr == null || !boardStr.startsWith("BOARD:")) {
+            return null;
+        }
+
+        Board1D board = new Board1D();
+        String[] parts = boardStr.substring("BOARD:".length()).split(",");
+
+        if (parts.length != 9) return null;
+
+        for (int i = 0; i < 9; i++) {
+            try {
+                int value = Integer.parseInt(parts[i].trim());
+                board.cells[i] = value;
+            } catch (NumberFormatException e) {
+                return null;
+            }
+        }
+
+        return board;
     }
 }

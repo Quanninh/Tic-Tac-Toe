@@ -1,9 +1,16 @@
-package vgu.pe2026.ttt.basic;
+package vgu.pe2026.ttt.basic.SingleMultiClient;
 
 import java.net.*;
 import java.io.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import vgu.pe2026.ttt.basic.Board;
+import vgu.pe2026.ttt.basic.Board2D;
+import vgu.pe2026.ttt.basic.Game;
+import vgu.pe2026.ttt.basic.Machine;
+import vgu.pe2026.ttt.basic.NetworkHuman;
+import vgu.pe2026.ttt.basic.Player;
 
 public class MultiUserServer {
     private static final int PORT = 5002;

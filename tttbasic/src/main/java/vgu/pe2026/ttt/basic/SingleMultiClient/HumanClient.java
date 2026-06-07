@@ -1,8 +1,10 @@
-package vgu.pe2026.ttt.basic;
+package vgu.pe2026.ttt.basic.SingleMultiClient;
 
 import java.net.*;
 import java.io.*;
 import java.util.Scanner;
+import vgu.pe2026.ttt.basic.Board;
+import vgu.pe2026.ttt.basic.Board2D;
 
 public class HumanClient {
 
@@ -35,8 +37,12 @@ public class HumanClient {
                 String response;
 
                 while ((response = in.readLine()) != null) {
-
-                    System.out.println(response);
+                    if (response.startsWith("BOARD:")){
+                        Board board = Board2D.fromString(response);
+                        board.display();
+                    }else{
+                        System.out.println(response);
+                    }
 
                     if (!in.ready()) {
                         break;

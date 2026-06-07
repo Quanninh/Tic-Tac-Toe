@@ -14,10 +14,8 @@ public class StatelessClient {
         Scanner scanner = new Scanner(System.in);
 
         Board2D board = new Board2D();
-
+        System.out.println("Hello!");
         while (true) {
-
-            System.out.println();
             System.out.println("Current board:");
             board.display();
 

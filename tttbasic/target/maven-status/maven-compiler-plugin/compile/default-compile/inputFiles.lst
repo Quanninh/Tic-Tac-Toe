@@ -6,11 +6,11 @@
 /Users/quanninh/Documents/Third_year/Sem_2/Prg_exer/Project/Tic-Tac-Toe/tttbasic/src/main/java/vgu/pe2026/ttt/basic/Machine.java
 /Users/quanninh/Documents/Third_year/Sem_2/Prg_exer/Project/Tic-Tac-Toe/tttbasic/src/main/java/vgu/pe2026/ttt/basic/NetworkHuman.java
 /Users/quanninh/Documents/Third_year/Sem_2/Prg_exer/Project/Tic-Tac-Toe/tttbasic/src/main/java/vgu/pe2026/ttt/basic/Player.java
+/Users/quanninh/Documents/Third_year/Sem_2/Prg_exer/Project/Tic-Tac-Toe/tttbasic/src/main/java/vgu/pe2026/ttt/basic/SecureStatelessClient.java
+/Users/quanninh/Documents/Third_year/Sem_2/Prg_exer/Project/Tic-Tac-Toe/tttbasic/src/main/java/vgu/pe2026/ttt/basic/SecureStatelessServer.java
 /Users/quanninh/Documents/Third_year/Sem_2/Prg_exer/Project/Tic-Tac-Toe/tttbasic/src/main/java/vgu/pe2026/ttt/basic/SingleMultiClient/ComputerServer.java
 /Users/quanninh/Documents/Third_year/Sem_2/Prg_exer/Project/Tic-Tac-Toe/tttbasic/src/main/java/vgu/pe2026/ttt/basic/SingleMultiClient/HumanClient.java
 /Users/quanninh/Documents/Third_year/Sem_2/Prg_exer/Project/Tic-Tac-Toe/tttbasic/src/main/java/vgu/pe2026/ttt/basic/SingleMultiClient/MultiUserServer.java
-/Users/quanninh/Documents/Third_year/Sem_2/Prg_exer/Project/Tic-Tac-Toe/tttbasic/src/main/java/vgu/pe2026/ttt/basic/Stateless/StatelessClient.java
-/Users/quanninh/Documents/Third_year/Sem_2/Prg_exer/Project/Tic-Tac-Toe/tttbasic/src/main/java/vgu/pe2026/ttt/basic/Stateless/StatelessServer.java
 /Users/quanninh/Documents/Third_year/Sem_2/Prg_exer/Project/Tic-Tac-Toe/tttbasic/src/main/java/vgu/pe2026/ttt/basic/StatelessClient.java
 /Users/quanninh/Documents/Third_year/Sem_2/Prg_exer/Project/Tic-Tac-Toe/tttbasic/src/main/java/vgu/pe2026/ttt/basic/StatelessServer.java
 /Users/quanninh/Documents/Third_year/Sem_2/Prg_exer/Project/Tic-Tac-Toe/tttbasic/src/main/java/vgu/pe2026/ttt/basic/TicTacToe.java

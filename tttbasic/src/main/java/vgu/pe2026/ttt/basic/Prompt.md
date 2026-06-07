@@ -1,0 +1,2 @@
+In the logic code of StatelessServer and StatelessClient, client can cheat because they just send a won board to server. Now, to prevent it: both server and client use cryptographic method HMAC. Both sides keep a shared secret key and clients use it to create a HMAC on a board before sending to server. When server receives a board, it will firstly verify a board based on the HMAC signature and then continue the logic in StatelessServer code
+Implement this logic, keep all codes in this project, don't modify anything, just add 2 new codes

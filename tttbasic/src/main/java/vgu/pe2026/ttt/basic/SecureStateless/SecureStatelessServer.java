@@ -1,4 +1,4 @@
-package vgu.pe2026.ttt.basic;
+package vgu.pe2026.ttt.basic.SecureStateless;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +11,9 @@ import java.security.MessageDigest;
 import java.util.Base64;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+
+import vgu.pe2026.ttt.basic.Board2D;
+import vgu.pe2026.ttt.basic.Machine;
 
 public class SecureStatelessServer {
 
@@ -55,6 +58,12 @@ public class SecureStatelessServer {
             return;
         }
 
+        if ("START".equals(moveStr)) {
+            out.println("START");
+            out.println(signBoard("BOARD:0,0,0,0,0,0,0,0,0"));
+            return;
+        }
+
         if (moveStr.equalsIgnoreCase("q")) {
             out.println("QUIT");
             return;
@@ -62,6 +71,7 @@ public class SecureStatelessServer {
 
         String signedBoard = in.readLine();
 
+        
         if (!verifySignedBoard(signedBoard)) {
             out.println("INVALID_SIGNATURE");
             return;
@@ -69,10 +79,10 @@ public class SecureStatelessServer {
 
         Board2D board = Board2D.fromString(extractBoard(signedBoard));
 
-        // if (board == null) {
-        //     out.println("ERROR");
-        //     return;
-        // }
+        if (board == null) {
+            out.println("ERROR");
+            return;
+        }
 
         try {
 
@@ -181,12 +191,12 @@ public class SecureStatelessServer {
         return signedBoard.substring(boardStart + 1);
     }
 
-    private static String createHmac(String message) {
+    private static String createHmac(String board) {
         try {
             Mac mac = Mac.getInstance(HMAC_ALGORITHM);
             SecretKeySpec key = new SecretKeySpec(sharedSecret().getBytes(StandardCharsets.UTF_8), HMAC_ALGORITHM);
             mac.init(key);
-            return Base64.getEncoder().encodeToString(mac.doFinal(message.getBytes(StandardCharsets.UTF_8)));
+            return Base64.getEncoder().encodeToString(mac.doFinal(board.getBytes(StandardCharsets.UTF_8)));
         } catch (Exception e) {
             throw new IllegalStateException("Unable to create HMAC", e);
         }

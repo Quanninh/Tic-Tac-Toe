@@ -1,40 +1,51 @@
-package vgu.pe2026.ttt.basic;
+package vgu.pe2026.ttt.basic.SecureStateless;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.util.Base64;
 import java.util.Scanner;
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
+
+import vgu.pe2026.ttt.basic.Board;
+import vgu.pe2026.ttt.basic.Board2D;
 
 public class SecureStatelessClient {
 
     private static final String HOST = "localhost";
     private static final int PORT = 5004;
-    private static final String HMAC_ALGORITHM = "HmacSHA256";
+    private static String lastSignedBoard;
     private static final String MESSAGE_PREFIX = "HMAC:";
-    private static final String DEFAULT_SHARED_SECRET = "ttt-basic-shared-secret";
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-
-        Board2D board = new Board2D();
-
+        Board board = null;
         System.out.println("Hello!");
+        try(
+            Socket socket = new Socket(HOST, PORT);
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        ){
+            out.println("START");
+
+            String status = in.readLine();
+            if (status.equals("START")){
+                String boardStr = in.readLine();
+                lastSignedBoard = boardStr;
+                board = Board2D.fromString(extractBoard(boardStr));
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
         while (true) {
             System.out.println("Current board:");
             board.display();
-
             System.out.print("Choose a cell from 1 to 9 (or q to quit): ");
 
             String move = scanner.nextLine().trim();
-
             try (
                     Socket socket = new Socket(HOST, PORT);
 
@@ -45,7 +56,7 @@ public class SecureStatelessClient {
                 out.println(move);
 
                 if (!move.equalsIgnoreCase("q")) {
-                    out.println(signBoard(board.boardToString()));
+                    out.println(lastSignedBoard);
                 }
 
                 String status = in.readLine();
@@ -78,11 +89,7 @@ public class SecureStatelessClient {
                 }
 
                 String signedBoard = in.readLine();
-
-                if (!verifySignedBoard(signedBoard)) {
-                    System.out.println("Server board signature is invalid");
-                    break;
-                }
+                lastSignedBoard = signedBoard;
 
                 board = Board2D.fromString(extractBoard(signedBoard));
 
@@ -122,26 +129,8 @@ public class SecureStatelessClient {
         scanner.close();
     }
 
-    private static String signBoard(String boardString) {
-        return MESSAGE_PREFIX + createHmac(boardString) + ":" + boardString;
-    }
-
-    private static boolean verifySignedBoard(String signedBoard) {
-        String boardString = extractBoard(signedBoard);
-
-        if (boardString == null) {
-            return false;
-        }
-
-        String expected = signBoard(boardString);
-        byte[] expectedBytes = expected.getBytes(StandardCharsets.UTF_8);
-        byte[] actualBytes = signedBoard.getBytes(StandardCharsets.UTF_8);
-
-        return MessageDigest.isEqual(expectedBytes, actualBytes);
-    }
-
     private static String extractBoard(String signedBoard) {
-        if (signedBoard == null || !signedBoard.startsWith(MESSAGE_PREFIX)) { 
+        if (signedBoard == null || !signedBoard.startsWith(MESSAGE_PREFIX)) {
             return null;
         }
 
@@ -152,26 +141,5 @@ public class SecureStatelessClient {
         }
 
         return signedBoard.substring(boardStart + 1);
-    }
-
-    private static String createHmac(String message) {
-        try {
-            Mac mac = Mac.getInstance(HMAC_ALGORITHM);
-            SecretKeySpec key = new SecretKeySpec(sharedSecret().getBytes(StandardCharsets.UTF_8), HMAC_ALGORITHM);
-            mac.init(key);
-            return Base64.getEncoder().encodeToString(mac.doFinal(message.getBytes(StandardCharsets.UTF_8)));
-        } catch (Exception e) {
-            throw new IllegalStateException("Unable to create HMAC", e);
-        }
-    }
-
-    private static String sharedSecret() {
-        String secret = System.getenv("TTT_HMAC_SECRET");
-
-        if (secret == null || secret.isEmpty()) {
-            return DEFAULT_SHARED_SECRET;
-        }
-
-        return secret;
     }
 }

@@ -72,6 +72,7 @@ public class Game {
             output.println("End of the game");
         } else {
             int win = board.checkWin();
+            output.println(board.boardToString());
             output.println("Game is finished");
             if (win == HUMAN_PLAYER){
                 output.println("The winner is human");

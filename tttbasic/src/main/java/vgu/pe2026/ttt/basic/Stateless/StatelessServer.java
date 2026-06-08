@@ -1,7 +1,10 @@
-package vgu.pe2026.ttt.basic;
+package vgu.pe2026.ttt.basic.Stateless;
 
 import java.io.*;
 import java.net.*;
+
+import vgu.pe2026.ttt.basic.Board2D;
+import vgu.pe2026.ttt.basic.Machine;
 
 public class StatelessServer {
 
@@ -43,27 +46,22 @@ public class StatelessServer {
             return;
         }
 
-        // StringBuilder boardBuilder = new StringBuilder();
+        if (moveStr.equals("START")){
+            out.println("START");
+            out.println("BOARD:0,0,0,0,0,0,0,0,0");
+            return;
+        }
 
-        // for (int i = 0; i < 3; i++) {
-        //     String line = in.readLine();
 
-        //     if (line == null) {
-        //         return;
-        //     }
-
-        //     boardBuilder.append(line).append("\n");
-        // }
+        if (moveStr.equalsIgnoreCase("q")) {
+            out.println("QUIT");
+            return;
+        }
 
         Board2D board = Board2D.fromString(in.readLine());
 
         if (board == null) {
             out.println("ERROR");
-            return;
-        }
-
-        if (moveStr.equalsIgnoreCase("q")) {
-            out.println("QUIT");
             return;
         }
 

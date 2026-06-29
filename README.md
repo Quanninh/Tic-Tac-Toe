@@ -1,6 +1,6 @@
 # Tic-Tac-Toe
 ## Test Web Server
-Test /start endpoint
+Test $/start$ endpoint
 ```bash
 curl http://localhost:8080/tttbasic-1.0-SNAPSHOT/start
 START
